@@ -43,15 +43,15 @@ create table if not exists telefone(
  cpf_responsavel varchar(15),
  foreign key (cpf_responsavel) references responsavel(cpf)
 );
-create table if not exists marca(
-codigo int primary key,
-nome varchar(255)
-);
 create table if not exists modelo(
 codigo int primary key,
-preco float,
-marca_id int,
-foreign key (marca_id) references marca(codigo)
+preco float
+);
+create table if not exists marca(
+codigo int primary key,
+nome varchar(255),
+modelo_id int, 
+foreign key (modelo_id) references modelo(codigo)
 );
 create table if not exists veiculo_modelo(
 veiculo_chassi varchar(30),
@@ -60,10 +60,9 @@ foreign key (veiculo_chassi) references veiculo(chassi),
 foreign key (codigo_modelo) references modelo(codigo)
 );
 create table if not exists historico(
-id int primary key,
 dataRegesitro datetime,
 cpf_responsavel varchar(15),
-chassi_veiculo varchar(30),
+chassi_veiculo varchar(30) primary key,
 foreign key (cpf_responsavel) references responsavel(cpf),
 foreign key (chassi_veiculo) references veiculo(chassi)
 );
@@ -257,17 +256,17 @@ values
     (4, 'Chevrolet'),
     (5, 'Volkswagen');
     
-    insert into modelo (codigo, preco, marca_id) values
+    insert into modelo (codigo, preco,modelo_id) values
     (1, 35000.0, 1),
-    (2, 28000.0, 2),
-    (3, 40000.0, 3),
-    (4, 32000.0, 4),
-    (5, 30000.0, 5),
-    (6, 38000.0, 1),
-    (7, 26000.0, 2),
-    (8, 42000.0, 3),
-    (9, 34000.0, 4),
-    (10, 32000.0, 5);
+    (2, 28000.0,2),
+    (3, 40000.0,1),
+    (4, 32000.0,2),
+    (5, 30000.0,1)
+    (6, 38000.0,2),
+    (7, 26000.0,1),
+    (8, 42000.0,2),
+    (9, 34000.0,1),
+    (10, 32000.0,2);
     
     insert into veiculo_modelo (veiculo_chassi, codigo_modelo) values
     ('Z9A3B7Y6M2P1Q8R5', 1),
