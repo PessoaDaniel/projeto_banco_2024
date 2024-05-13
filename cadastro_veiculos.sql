@@ -1,74 +1,74 @@
-create database if not exists cadastro_veiculos charset utf8mb4 collate utf8mb4_0900_ai_ci;
-use cadastro_veiculos;
-create table if not exists veiculo (
-chassi varchar(30) primary key,
-renavan varchar(25),
-placa varchar(15),
-cor varchar(15),
-data_fabricacao date,
-quilometragem int,
-descricao text(500),
-situacao enum('disponivel', 'indisponivel')
+CREATE DATABASE IF NOT EXISTS cadastro_veiculos CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE cadastro_veiculos;
+CREATE TABLE IF NOT EXISTS veiculo (
+chassi VARCHAR(30) PRIMARY KEY,
+renavan VARCHAR(25),
+placa VARCHAR(15),
+cor VARCHAR(15),
+data_fabricacao DATE,
+quilometragem INT,
+descricao TEXT(500),
+situacao ENUM('disponivel', 'indisponivel')
 );
-create table if not exists estado(
-id int primary key,
-nome varchar(255),
-unidade_federativa varchar(2)
+CREATE TABLE IF NOT EXISTS estado(
+id INT PRIMARY KEY,
+nome VARCHAR(255),
+unidade_federativa VARCHAR(2)
 );
-create table if not exists cidade(
-id int primary key,
-nome varchar(255),
-estado_id int,
-foreign key (estado_id) references estado(id)
+CREATE TABLE IF NOT EXISTS cidade(
+id INT PRIMARY KEY,
+nome VARCHAR(255),
+estado_id INT,
+FOREIGN KEY (estado_id) REFERENCES estado(id)
 );
-create table if not exists endereco (
-id int primary key,
-logradouro varchar(255),
-numero varchar(255),
-bairro varchar(255),
-complemento text(300),
-cidade_id int,
-foreign key (cidade_id) references cidade(id)
+CREATE TABLE IF NOT EXISTS endereco (
+id INT PRIMARY KEY,
+logradouro VARCHAR(255),
+numero VARCHAR(255),
+bairro VARCHAR(255),
+complemento TEXT(300),
+cidade_id INT,
+FOREIGN KEY (cidade_id) REFERENCES cidade(id)
 );
-create table if not exists responsavel (
-cpf varchar(15) primary key,
-nome varchar(255),
-data_nascimento date,
-endereco_id int,
-foreign key (endereco_id) references endereco(id)
+CREATE TABLE IF NOT EXISTS responsavel (
+cpf VARCHAR(15) PRIMARY KEY,
+nome VARCHAR(255),
+data_nascimento DATE,
+endereco_id INT,
+FOREIGN KEY (endereco_id) REFERENCES endereco(id)
 );
-create table if not exists telefone(
- id int primary key,
- telefone varchar(255),
- cpf_responsavel varchar(15),
- foreign key (cpf_responsavel) references responsavel(cpf)
+CREATE TABLE IF NOT EXISTS telefone(
+ id INT PRIMARY KEY,
+ telefone VARCHAR(255),
+ cpf_responsavel VARCHAR(15),
+ FOREIGN KEY (cpf_responsavel) REFERENCES responsavel(cpf)
 );
-create table if not exists modelo(
-codigo int primary key,
-preco float
+CREATE TABLE IF NOT EXISTS modelo(
+codigo INT PRIMARY KEY,
+preco FLOAT
 );
-create table if not exists marca(
-codigo int primary key,
-nome varchar(255),
-modelo_id int, 
-foreign key (modelo_id) references modelo(codigo)
+CREATE TABLE IF NOT EXISTS marca(
+codigo INT PRIMARY KEY,
+nome VARCHAR(255),
+modelo_id INT, 
+FOREIGN KEY (modelo_id) REFERENCES modelo(codigo)
 );
-create table if not exists veiculo_modelo(
-veiculo_chassi varchar(30),
-codigo_modelo int,
-foreign key (veiculo_chassi) references veiculo(chassi),
-foreign key (codigo_modelo) references modelo(codigo)
+CREATE TABLE IF NOT EXISTS veiculo_modelo(
+veiculo_chassi VARCHAR(30),
+codigo_modelo INT,
+FOREIGN KEY (veiculo_chassi) REFERENCES veiculo(chassi),
+FOREIGN KEY (codigo_modelo) REFERENCES modelo(codigo)
 );
-create table if not exists historico(
-dataRegesitro datetime,
-cpf_responsavel varchar(15),
-chassi_veiculo varchar(30) primary key,
-foreign key (cpf_responsavel) references responsavel(cpf),
-foreign key (chassi_veiculo) references veiculo(chassi)
+CREATE TABLE IF NOT EXISTS historico(
+dataRegesitro DATETIME,
+cpf_responsavel VARCHAR(15),
+chassi_veiculo VARCHAR(30) PRIMARY KEY,
+FOREIGN KEY (cpf_responsavel) REFERENCES responsavel(cpf),
+FOREIGN KEY (chassi_veiculo) REFERENCES veiculo(chassi)
 );
-insert into veiculo 
+INSERT INTO veiculo 
    (chassi, renavan, placa, cor, data_fabricacao, quilometragem, descricao, situacao) 
-values
+VALUES
 	('Z9A3B7Y6M2P1Q8R5', 12345678901, 'ABC1234', '0xff112233', '2005-08-15', 123, 'Lorem ipsum dolor sit amet', 'disponivel'),
     ('ABC123456789', '12345678901', 'ABC1234', '0xff112233', '2005-08-15', 123, 'Lorem ipsum dolor sit amet', 'disponivel'),
     ('XYZ234567890', '23456789012', 'XYZ9876', '0xff445566', '1999-11-23', 456, 'Lorem ipsum', 'indisponivel'),
@@ -85,9 +85,9 @@ values
     ('HIJ345678901', '54321098765', 'HIJ6543', '0xffaabbcc', '1987-07-25', 123, 'Lorem ipsum', 'disponivel'),
     ('KLM456789012', '65432109876', 'KLM5432', '0xffddeeff', '2023-10-30', 456, 'Lorem ipsum dolor', 'indisponivel');
     
-insert 
-	into estado (id, nome, unidade_federativa) 
-values
+INSERT 
+	INTO estado (id, nome, unidade_federativa) 
+VALUES
 (1, 'Acre', 'AC'),
 (2, 'Alagoas', 'AL'),
 (3, 'Amapá', 'AP'),
@@ -116,8 +116,8 @@ values
 (26, 'Sergipe', 'SE'),
 (27, 'Tocantins', 'TO');
 
-insert into cidade (id, nome, estado_id)
-values 
+INSERT INTO cidade (id, nome, estado_id)
+VALUES 
     (1, 'ABREU E LIMA', 17),
     (2, 'AFRÂNIO', 17),
     (3, 'AGRESTINA', 17),
@@ -169,9 +169,9 @@ values
     (49, 'CHA DE CRUZES', 17),
     (50, 'CONDADO', 17);
     
-    insert into 
+    INSERT INTO 
     endereco (id, logradouro, numero, bairro, complemento, cidade_id) 
-    values
+    VALUES
     (1, 'Rua da Aurora', '123', 'Bairro das Flores', 'Apartamento 101', 35),
     (2, 'Avenida Recife', '456', 'Bairro do Recife', 'Casa Azul', 43),
     (3, 'Rua do Futuro', '789', 'Bairro da Esperança', 'Sobrado', 43),
@@ -217,8 +217,8 @@ values
     (43, 'Rua do Progresso', '3737', 'Bairro do Progresso', 'Casa do Progresso', 43),
     (44, 'Travessa da Esperança', '3838', 'Bairro da Esperança', 'Casa da Esperança', 43),
     (45, 'Avenida da Paz', '3939', 'Bairro da Paz', 'Casa da Paz', 6);
-  insert into responsavel (cpf, nome, data_nascimento, endereco_id) 
-  values 
+  INSERT INTO responsavel (cpf, nome, data_nascimento, endereco_id) 
+  VALUES 
   (12345678901, 'Monkey D. Luffy', '1997-05-05', 1),
     (23456789012, 'Roronoa Zoro', '1997-11-11', 2),
     (34567890123, 'Nami', '1998-07-03', 3),
@@ -235,8 +235,8 @@ values
     (45678910123, 'Kakashi Hatake', '1998-09-15', 14),
     (56789101234, 'Goku', '1979-04-16', 15);
     
-    insert into telefone (id, telefone, cpf_responsavel)
-    values
+    INSERT INTO telefone (id, telefone, cpf_responsavel)
+    VALUES
 	(1, '+5599988776655', 12345678901),
     (2, '+5599887766554', 23456789012),
     (3, '+5599776655443', 34567890123),
@@ -249,26 +249,26 @@ values
     (10, '+5599009988776', 10234567890);
     
     
-    insert into marca (codigo, nome) values
+    INSERT INTO marca (codigo, nome) VALUES
     (1, 'Toyota'),
     (2, 'Honda'),
     (3, 'Ford'),
     (4, 'Chevrolet'),
     (5, 'Volkswagen');
     
-    insert into modelo (codigo, preco,modelo_id) values
-    (1, 35000.0, 1),
-    (2, 28000.0,2),
-    (3, 40000.0,1),
-    (4, 32000.0,2),
-    (5, 30000.0,1)
-    (6, 38000.0,2),
-    (7, 26000.0,1),
-    (8, 42000.0,2),
-    (9, 34000.0,1),
-    (10, 32000.0,2);
+    INSERT INTO modelo (codigo, preco) VALUES
+    (1, 35000.0),
+    (2, 28000.0),
+    (3, 40000.0),
+    (4, 32000.0),
+    (5, 30000.0),
+    (6, 38000.0),
+    (7, 26000.0),
+    (8, 42000.0),
+    (9, 34000.0),
+    (10, 32000.0);
     
-    insert into veiculo_modelo (veiculo_chassi, codigo_modelo) values
+    INSERT INTO veiculo_modelo (veiculo_chassi, codigo_modelo) VALUES
     ('Z9A3B7Y6M2P1Q8R5', 1),
     ('ABC123456789', 2),
     ('XYZ234567890', 3),
@@ -285,12 +285,12 @@ values
     ('HIJ345678901', 4),
     ('KLM456789012', 5);
     
-insert into historico (id, dataRegesitro, cpf_responsavel, chassi_veiculo)
-values
-    (1, '2024-01-01 08:00:00', '12345678901', 'Z9A3B7Y6M2P1Q8R5'),
-    (2, '2024-01-02 10:30:00', '23456789012', 'ABC123456789'),
-    (3, '2024-01-03 13:15:00', '34567890123', 'XYZ234567890'),
-    (4, '2024-01-04 15:45:00', '45678901234', 'DEF345678901'),
-    (5, '2024-01-05 17:20:00', '56789012345', 'GHI456789012');
+INSERT INTO historico (dataRegesitro, cpf_responsavel, chassi_veiculo)
+VALUES
+    ('2024-01-01 08:00:00', '12345678901', 'Z9A3B7Y6M2P1Q8R5'),
+    ( '2024-01-02 10:30:00', '23456789012', 'ABC123456789'),
+    ('2024-01-03 13:15:00', '34567890123', 'XYZ234567890'),
+    ('2024-01-04 15:45:00', '45678901234', 'DEF345678901'),
+    ('2024-01-05 17:20:00', '56789012345', 'GHI456789012');
 
     
