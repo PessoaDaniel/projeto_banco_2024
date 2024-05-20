@@ -1,3 +1,9 @@
+/* Grupo: Daniel pessoa
+   Jhon
+   Adryan
+   Bernardo*/
+   
+   
 DELIMITER $$
 	CREATE PROCEDURE cadastrar_veiculo (
 		IN chassi VARCHAR (30),
@@ -28,7 +34,7 @@ DELIMITER $$
 		);
 	END $$ 
 DELIMITER ; 
-
+SET @id_marca = 20;
 DELIMITER $$
 	CREATE PROCEDURE buscar_telefone_responsavel(IN cpf VARCHAR(15), OUT telefone_r VARCHAR(255))
 	BEGIN
@@ -42,11 +48,6 @@ BEGIN
 	SET @id_m = 0;
 	SELECT codigo INTO @id_m FROM modelo ORDER BY codigo DESC LIMIT 1;
 	INSERT INTO modelo (codigo, preco) VALUES (@id_m + 1, preco_m); 
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE 
 END $$
 DELIMITER ;
 
@@ -67,21 +68,16 @@ BEGIN
 	SET @id_marca = 0;
 	SELECT codigo INTO @id_marca FROM marca ORDER BY codigo DESC LIMIT 1;
 	INSERT INTO marca(codigo, nome, modelo_id) VALUES 
-	(@id_m + 1, nome1, 1),
-	(@id_m + 2, nome2, 1),
-	(@id_m + 3, nome3, 1),
-	(@id_m + 4, nome4, 1),
-	(@id_m + 5, nome5, 1),
-	(@id_m + 6, nome6, 1),
-	(@id_m + 7, nome7, 1),
-	(@id_m + 8, nome8, 1),
-	(@id_m + 9, nome9, 1),	
-	(@id_m + 10, nome10, 1); 
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE 
+	(@id_marca + 1, nome1, 1),
+	(@id_marca + 2, nome2, 1),
+	(@id_marca + 3, nome3, 1),
+	(@id_marca + 4, nome4, 1),
+	(@id_marca + 5, nome5, 1),
+	(@id_marca + 6, nome6, 1),
+	(@id_marca + 7, nome7, 1),
+	(@id_marca + 8, nome8, 1),
+	(@id_marca + 9, nome9, 1),	
+	(@id_marca + 10, nome10, 1); 
 END $$
 DELIMITER ;
 
@@ -91,7 +87,7 @@ BEGIN
 SELECT COUNT(*) INTO qtd FROM veiculo;
 END $$
 DELIMITER ;
-
+SELECT codigo FROM marca ORDER BY codigo DESC LIMIT 1;
 /*call  cadastrar_veiculo('dadas5454', '45454444454', 'xxxx1544',  '0xff000000', 10, 'palio novo', 'disponivel');*/
 
 /*SET @telefone = '';
