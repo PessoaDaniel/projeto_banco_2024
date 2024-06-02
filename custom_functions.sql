@@ -23,23 +23,23 @@ RETURNS FLOAT DETERMINISTIC
 BEGIN
 	DECLARE soma FLOAT;
 	SELECT SUM(m.preco) INTO soma FROM modelo m 
-	inner join veiculo_modelo vm on vm.codigo_modelo = m.codigo
-	inner join veiculo v on vm.veiculo_chassi = v.chassi
-	where v.chassi in (veiculo1, veiculo2);
-return soma;
+	INNER JOIN veiculo_modelo vm ON vm.codigo_modelo = m.codigo
+	INNER JOIN veiculo v ON vm.veiculo_chassi = v.chassi
+	WHERE v.chassi IN (veiculo1, veiculo2);
+RETURN soma;
 
-end
+END
 
 
-// Delimiter ;
+// DELIMITER ;
 
-Delimiter //
+DELIMITER //
 
-create function media_precos ()
-returns float deterministic
-begin
-declare media float;
-select avg(m.preco) into media from modelo m;
+CREATE FUNCTION media_precos ()
+RETURNS FLOAT DETERMINISTIC
+BEGIN
+DECLARE media FLOAT;
+SELECT AVG(m.preco) INTO media FROM modelo m;
 
 return media;
 

@@ -60,9 +60,10 @@ FOREIGN KEY (veiculo_chassi) REFERENCES veiculo(chassi),
 FOREIGN KEY (codigo_modelo) REFERENCES modelo(codigo)
 );
 CREATE TABLE IF NOT EXISTS historico(
+cod_registro INT PRIMARY KEY AUTO_INCREMENT,
 dataRegesitro DATETIME,
 cpf_responsavel VARCHAR(15),
-chassi_veiculo VARCHAR(30) PRIMARY KEY,
+chassi_veiculo VARCHAR(30),
 FOREIGN KEY (cpf_responsavel) REFERENCES responsavel(cpf),
 FOREIGN KEY (chassi_veiculo) REFERENCES veiculo(chassi)
 );
